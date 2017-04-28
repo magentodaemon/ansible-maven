@@ -1,0 +1,33 @@
+- name: Download maven
+  get_url:
+    url: 'http://www-eu.apache.org/dist/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz'
+    dest: /root/maven.tar.gz
+
+- name: Uncompress maven tar
+  unarchive:
+    src: /root/maven.tar.gz
+    dest: /opt
+    remote_src: true  
+
+- name: Create maven symlink
+  file:
+    src: /opt/apache-maven-3.5.0
+    dest: /opt/maven
+    state: link
+
+
+- name: Set maven maven home
+  shell: sh -c 'echo MAVEN_HOME=/opt/maven >> /etc/profile'
+
+- name: Set m3 home 
+  shell: sh -c 'echo M3_HOME=/opt/maven >> /etc/profile'
+
+- name: Source maven variables
+  shell: source /etc/profile
+
+- name: Create maven symlink in usr bin
+  file: 
+    src: /opt/maven/bin/mvn 
+    dest: /usr/bin/mvn
+    state: link
+

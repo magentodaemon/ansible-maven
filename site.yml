@@ -1,0 +1,8 @@
+---
+#create tomcat-user and install tomcat
+- hosts: mavenserver
+  remote_user: root
+
+  roles: 
+    - maven-install
+...
